@@ -15,12 +15,17 @@ class Descriptor:
     def lpb_history(image,numPoints,radius,eps=1e-7):
         # Chuyển ảnh sang đen trắng
         # đầu vào của local_binary_pattern image đen trắng
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
         
+        # TÍnh lpb của ảnh image
         lbp = feature.local_binary_pattern(image, numPoints, radius, method="uniform")
+
+        # Tính histogram của ảnh sau khi đã lpb
         (hist, _) = np.histogram(lbp.ravel(),bins=np.arange(0,numPoints + 3),range=(0, numPoints + 2))
 
         hist = hist.astype("float")
+
+        # Chuẩn hóa
         hist /= (hist.sum() + eps)
         return hist
 
